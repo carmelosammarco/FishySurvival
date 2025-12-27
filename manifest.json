@@ -1,0 +1,21 @@
+{
+    "name": "Fishy Survival",
+    "short_name": "Fishy",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#3b82f6",
+    "theme_color": "#3b82f6",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "assets/icon.jpeg",
+            "sizes": "192x192",
+            "type": "image/jpeg"
+        },
+        {
+            "src": "assets/icon.jpeg",
+            "sizes": "512x512",
+            "type": "image/jpeg"
+        }
+    ]
+}
