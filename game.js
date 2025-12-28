@@ -2,7 +2,6 @@
 const CANVAS_ID = 'gameCanvas';
 const BASE_SPAWN_RATE = 60; 
 
-
 // Game State
 let canvas, ctx;
 let lastTime = 0;
@@ -19,11 +18,9 @@ let fishRequiredForLevel = 10;
 let particleSystem = [];
 
 
-
 // Entities
 let player;
 let fishes = [];
-
 
 // Assets
 const assets = {
