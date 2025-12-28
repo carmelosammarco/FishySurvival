@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fishy-survival-v1';
+const CACHE_NAME = 'fishy-survival-v2';
 const ASSETS = [
   './',
   './index.html',

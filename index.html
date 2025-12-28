@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
     <title>Fishy Survival</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -12,38 +10,128 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" type="image/jpeg" href="assets/icon.jpeg">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <div id="game-container">
         <canvas id="gameCanvas"></canvas>
+        
         <div id="ui-layer">
+            <!-- Start Screen -->
             <div id="start-screen" class="screen">
-                <h1>Fishy Survival</h1>
-                <p>Eat smaller fish. Avoid bigger fish.</p>
-                <button id="start-btn">Start Game</button>
+                <div class="glass-panel">
+                    <h1 class="game-title">Fishy Survival</h1>
+                    <p class="subtitle">Eat smaller fish. Avoid bigger fish.</p>
+                    
+                    <div class="input-group">
+                        <input type="text" id="player-name-input" placeholder="Enter your name" maxlength="15" autocomplete="off">
+                    </div>
+                    
+                    <button id="play-btn" class="primary-btn pulse-anim">Play Now</button>
+                    <button id="leaderboard-btn" class="secondary-btn">Leaderboard</button>
+                </div>
             </div>
+
+            <!-- Leaderboard Screen -->
+            <div id="leaderboard-screen" class="screen hidden">
+                <div class="glass-panel wide-panel">
+                    <h2>Top Survivors</h2>
+                    <ul id="leaderboard-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                    <button id="back-btn" class="secondary-btn">Back</button>
+                </div>
+            </div>
+
+            <!-- Level Complete Screen -->
+            <div id="level-complete-screen" class="screen hidden">
+                <div class="glass-panel">
+                    <h2>Level Complete!</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="label">Score</span>
+                            <span class="value" id="level-complete-score">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">Next Level</span>
+                            <span class="value" id="next-level-num">2</span>
+                        </div>
+                    </div>
+                    <button id="next-level-btn" class="primary-btn pulse-anim">Continue</button>
+                </div>
+            </div>
+
+            <!-- Pause Screen -->
+            <div id="pause-screen" class="screen hidden">
+                <div class="glass-panel">
+                    <h2>PAUSED</h2>
+                    <p>Tap Resume to continue</p>
+                </div>
+            </div>
+
+            <!-- Game Over Screen -->
             <div id="game-over-screen" class="screen hidden">
-                <h1>Game Over</h1>
-                <p>Score: <span id="final-score">0</span></p>
-                <button id="restart-btn">Play Again</button>
+                <div class="glass-panel">
+                    <h1 class="danger-text">Game Over</h1>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="label">Score</span>
+                            <span class="value" id="final-score">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">Level</span>
+                            <span class="value" id="final-level">1</span>
+                        </div>
+                    </div>
+                    <button id="restart-btn" class="primary-btn">Play Again</button>
+                    <button id="go-leaderboard-btn" class="secondary-btn">Leaderboard</button>
+                </div>
             </div>
+
+            <!-- HUD -->
             <div id="hud" class="hidden">
-                <div class="hud-item">Lives: <span id="lives-display">3</span></div>
-                <div class="hud-item">Score: <span id="score-display">0</span></div>
+                <div class="hud-top">
+                    <div class="hud-item">
+                        <span class="label">Player</span>
+                        <span class="value" id="player-name-hud">Player</span>
+                    </div>
+                    <div class="hud-item center">
+                        <span class="label">Level</span>
+                        <span class="value lg" id="level-display">1</span>
+                    </div>
+                    <div class="hud-item right">
+                         <button id="pause-btn" class="nav-btn">Pause</button>
+                    </div>
+                </div>
+                
+                <div class="hud-bottom">
+                     <div class="hud-item">
+                        <span class="emoji">❤️</span> <span id="lives-display">3</span>
+                    </div>
+                     <div class="hud-item">
+                        <span class="emoji">⭐</span> <span id="score-display">0</span>
+                    </div>
+                     <div class="hud-item">
+                        <span class="emoji">🐟</span> <span id="fish-remaining">10</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <script src="game.js"></script>
+    <script src="sw-register.js"></script> <!-- Separated for clarity -->
     <script>
+        // Inline SW registration if separate file is overkill, or just keep it simple
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker registered', reg))
-                    .catch(err => console.log('Service Worker registration failed', err));
+                    .then(reg => console.log('SW registered'))
+                    .catch(err => console.log('SW failed', err));
             });
         }
     </script>
 </body>
-
 </html>
